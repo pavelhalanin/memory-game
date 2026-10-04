@@ -56,7 +56,8 @@ class GameLogic {
     const SHUFFLE_ARRAY = this.shuffle(ARRAY);
 
     const GAME_LOGIC = {
-      opened: [],
+      card1: null,
+      card2: null,
       foundCards: {},
       array: SHUFFLE_ARRAY,
     };
@@ -77,69 +78,88 @@ class GameLogic {
     return arr;
   }
 
-  static setOpen(id) {
+  static async setOpen(id) {
     const GAME_LOGIC = this.getGame();
-    let openedCards = GAME_LOGIC.opened;
-    const GAME_ARRAY = GAME_LOGIC.array;
 
-    openedCards = openedCards.slice(0, 2);
-
-    if (openedCards.filter((e) => e == id).length > 0) {
-      openedCards = openedCards.filter((e) => e !== id);
+    if (id === -1) {
+      GAME_LOGIC.card1 = null;
+      GAME_LOGIC.card2 = null;
     } else {
-      openedCards.push(id);
+      if (GAME_LOGIC.card1) {
+        if (GAME_LOGIC.card2) {
+          return;
+        } else {
+          if (GAME_LOGIC.card1 !== id) {
+            GAME_LOGIC.card2 = id;
+          }
+        }
+      } else {
+        GAME_LOGIC.card1 = id;
+      }
     }
 
-    openedCards = openedCards.slice(-2);
-
-    for (let i = 0; i < GAME_ARRAY.length; i++) {
-      const ID_I = `${GAME_ARRAY[i].id}`;
-      GAME_ARRAY[i].isOpen = "false";
+    for (let i = 0; i < GAME_LOGIC.array.length; i++) {
+      const ID_I = `${GAME_LOGIC.array[i].id}`;
+      GAME_LOGIC.array[i].isOpen = "false";
     }
 
-    if (openedCards[0]) {
-      for (let i = 0; i < GAME_ARRAY.length; i++) {
-        const ID_I = `${GAME_ARRAY[i].id}`;
-        if (ID_I === openedCards[0]) {
-          GAME_ARRAY[i].isOpen = "true";
+    if (GAME_LOGIC.card1) {
+      for (let i = 0; i < GAME_LOGIC.array.length; i++) {
+        const ID_I = `${GAME_LOGIC.array[i].id}`;
+
+        if (ID_I === GAME_LOGIC.card1) {
+          GAME_LOGIC.array[i].isOpen = "true";
           break;
         }
       }
     }
 
-    if (openedCards[1]) {
-      for (let i = 0; i < GAME_ARRAY.length; i++) {
-        const ID_I = `${GAME_ARRAY[i].id}`;
-        if (ID_I === openedCards[1]) {
-          GAME_ARRAY[i].isOpen = "true";
+    if (GAME_LOGIC.card2) {
+      for (let i = 0; i < GAME_LOGIC.array.length; i++) {
+        const ID_I = `${GAME_LOGIC.array[i].id}`;
+        if (ID_I === GAME_LOGIC.card2) {
+          GAME_LOGIC.array[i].isOpen = "true";
           break;
         }
       }
     }
 
-    if (openedCards[0] && openedCards[1]) {
-      const CARD1 = GAME_ARRAY.find((e) => e.id == openedCards[0]);
-      const CARD2 = GAME_ARRAY.find((e) => e.id == openedCards[1]);
+    if (GAME_LOGIC.card1 && GAME_LOGIC.card2) {
+      const CARD1 = GAME_LOGIC.array.find((e) => e.id == GAME_LOGIC.card1);
+      const CARD2 = GAME_LOGIC.array.find((e) => e.id == GAME_LOGIC.card2);
+
       const IS_EQUALS = CARD1.cardId === CARD2.cardId;
       if (IS_EQUALS) {
         GAME_LOGIC.foundCards[CARD1.cardId] = 1;
+        GAME_LOGIC.card1 = null;
+        GAME_LOGIC.card2 = null;
       }
     }
 
     const FOUND_CARDS = Object.keys(GAME_LOGIC.foundCards);
-    for (let i = 0; i < GAME_ARRAY.length; i++) {
-      const CARD_ID = `${GAME_ARRAY[i].cardId}`;
+    for (let i = 0; i < GAME_LOGIC.array.length; i++) {
+      const CARD_ID = `${GAME_LOGIC.array[i].cardId}`;
 
       if (FOUND_CARDS.includes(CARD_ID)) {
-        GAME_ARRAY[i].isOpen = "true";
+        GAME_LOGIC.array[i].isOpen = "true";
       }
     }
 
-    GAME_LOGIC.array = GAME_ARRAY;
-    GAME_LOGIC.opened = openedCards;
-
     localStorage.setItem(this.localStorageKey, JSON.stringify(GAME_LOGIC));
     this.updateGameHtml();
+
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    if (GAME_LOGIC.card1 && GAME_LOGIC.card2) {
+      const CARD1 = GAME_LOGIC.array.find((e) => e.id == GAME_LOGIC.card1);
+      const CARD2 = GAME_LOGIC.array.find((e) => e.id == GAME_LOGIC.card2);
+      const NOT_EQUALS = CARD1.cardId !== CARD2.cardId;
+      if (NOT_EQUALS) {
+        GAME_LOGIC.card1 = null;
+        GAME_LOGIC.card2 = null;
+        this.setOpen(-1);
+      }
+    }
   }
 
   static updateGameHtml() {

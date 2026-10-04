@@ -74,7 +74,7 @@ class WinModal {
     return BUTTON;
   }
 
-  static closeModalAndStartBattle() {
+  static closeModalAndStartGame() {
     this.closeModal();
     Generate.render();
   }
@@ -83,8 +83,8 @@ class WinModal {
     const DIV = document.createElement("div");
 
     const BUTTON = document.createElement("button");
-    BUTTON.setAttribute("onclick", `${this.name}.closeModalAndStartBattle()`);
-    BUTTON.textContent = "Start new battle";
+    BUTTON.setAttribute("onclick", `${this.name}.closeModalAndStartGame()`);
+    BUTTON.textContent = "New game";
 
     DIV.appendChild(BUTTON);
 

@@ -60,6 +60,7 @@ class GameLogic {
       card2: null,
       foundCards: {},
       score: 0,
+      isScoreNotSaved: true,
       array: SHUFFLE_ARRAY,
     };
 
@@ -214,6 +215,13 @@ class GameLogic {
     const COUNT_CARDS = GAME_LOGIC.array.length;
     if (CLOSED_CARDS === COUNT_CARDS) {
       WinModal.openModal();
+
+      if (GAME_LOGIC.isScoreNotSaved) {
+        GAME_LOGIC.isScoreNotSaved = false;
+        localStorage.setItem(this.localStorageKey, JSON.stringify(GAME_LOGIC));
+        TopModal.addTop10(GAME_LOGIC.score);
+      }
+
       return true;
     }
 

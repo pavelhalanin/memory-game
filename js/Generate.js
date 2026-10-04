@@ -20,6 +20,7 @@ class Generate {
       CARDS.appendChild(ELEMENT);
     }
 
+    DIV.append(CounterHelper.GetGameCountComponent());
     DIV.append(CARDS);
   }
 

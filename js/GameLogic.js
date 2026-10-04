@@ -59,6 +59,7 @@ class GameLogic {
       card1: null,
       card2: null,
       foundCards: {},
+      score: 0,
       array: SHUFFLE_ARRAY,
     };
 
@@ -100,6 +101,10 @@ class GameLogic {
       } else {
         GAME_LOGIC.card1 = id;
       }
+    }
+
+    if (GAME_LOGIC.card1 && GAME_LOGIC.card2) {
+      GAME_LOGIC.score += 1;
     }
 
     for (let i = 0; i < GAME_LOGIC.array.length; i++) {
@@ -151,6 +156,7 @@ class GameLogic {
 
     localStorage.setItem(this.localStorageKey, JSON.stringify(GAME_LOGIC));
     this.updateGameHtml();
+    CounterHelper.render();
 
     if (this.isWin()) {
       return;

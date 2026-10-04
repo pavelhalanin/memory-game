@@ -139,7 +139,7 @@ class TopModal {
       TD2.textContent = "Score";
 
       const TD3 = document.createElement("td");
-      TD3.textContent = "Datetime";
+      TD3.textContent = "Date";
 
       TR.appendChild(TD1);
       TR.appendChild(TD2);
@@ -183,10 +183,6 @@ class TopModal {
     const MM = String(D.getMonth() + 1).padStart(2, "0");
     const DD = String(D.getDate()).padStart(2, "0");
 
-    const HH = String(D.getHours()).padStart(2, "0");
-    const MI = String(D.getMinutes()).padStart(2, "0");
-    const SS = String(D.getSeconds()).padStart(2, "0");
-
-    return `${DD}.${MM}.${YYYY} ${HH}:${MI}:${SS}`;
+    return `${DD}.${MM}.${YYYY}`;
   }
 }

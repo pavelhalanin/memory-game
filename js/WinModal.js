@@ -58,9 +58,12 @@ class WinModal {
   }
 
   static ModalBodyComponent() {
+    const GAME_LOGIC = GameLogic.getGame();
+    const SCORE = GAME_LOGIC.score;
+
     const BODY = document.createElement("div");
     BODY.classList.add("modal__body");
-    BODY.textContent = "You are win";
+    BODY.textContent = `You are win with score ${SCORE}`;
     BODY.appendChild(this.ModalButtonComponent());
     BODY.appendChild(this.ModalButtonStartBattleComponent());
     return BODY;

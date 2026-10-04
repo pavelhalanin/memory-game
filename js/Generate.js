@@ -1,11 +1,10 @@
 class Generate {
   static render() {
-    const SELECTOR = "#root";
-    const DIV = document.querySelector(SELECTOR);
-    if (!DIV) {
-      console.info(`Node is not found: ${SELECTOR}`);
-      return;
-    }
+    document.body.querySelectorAll("#root").forEach((e) => e.remove());
+
+    const DIV = document.createElement("div");
+    DIV.setAttribute("id", "root");
+    document.body.appendChild(DIV);
 
     const CARDS = document.createElement("div");
     CARDS.classList.add("cards");

@@ -79,6 +79,10 @@ class GameLogic {
   }
 
   static async setOpen(id) {
+    if (this.isWin()) {
+      return;
+    }
+
     const GAME_LOGIC = this.getGame();
 
     if (id === -1) {
@@ -148,6 +152,10 @@ class GameLogic {
     localStorage.setItem(this.localStorageKey, JSON.stringify(GAME_LOGIC));
     this.updateGameHtml();
 
+    if (this.isWin()) {
+      return;
+    }
+
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
     if (GAME_LOGIC.card1 && GAME_LOGIC.card2) {
@@ -190,5 +198,19 @@ class GameLogic {
         CARDS[i].setAttribute("data-is-rotate", "false");
       }
     }
+  }
+
+  static isWin() {
+    const GAME_LOGIC = this.getGame();
+    const CLOSED_CARDS = GAME_LOGIC.array.filter(
+      (e) => e.isOpen == "true",
+    ).length;
+    const COUNT_CARDS = GAME_LOGIC.array.length;
+    if (CLOSED_CARDS === COUNT_CARDS) {
+      WinModal.openModal();
+      return true;
+    }
+
+    return false;
   }
 }

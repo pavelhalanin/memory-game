@@ -11,7 +11,7 @@ export class WinModal extends Modal {
     return HtmlNode.render(
       "div",
       [
-        `You are win with score ${SCORE}`,
+        `Все пары найдены. Количество совершённых ходов: ${SCORE}`,
         this.ModalButtonComponent(),
         this.ModalButtonStartBattleComponent(),
       ],
@@ -30,11 +30,18 @@ export class WinModal extends Modal {
     return HtmlNode.render(
       "div",
       [
-        HtmlNode.render("button", ["New game"], {
+        HtmlNode.render("button", ["Новая игра"], {
+          className: "btn btn-info",
           onclick: () => this.closeModalAndStartGame(),
         }),
+        HtmlNode.render("button", ["Закрыть"], {
+          className: "btn btn-danger",
+          onclick: () => this.closeModal(),
+        }),
       ],
-      {},
+      {
+        className: "modal__footer_win",
+      },
     );
   }
 }

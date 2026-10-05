@@ -14,13 +14,15 @@ export class Header {
   }
 
   static NewGameButtonComponent() {
-    return HtmlNode.render("button", ["New game"], {
+    return HtmlNode.render("button", ["Новая игра"], {
+      className: "btn btn-info",
       onclick: () => Generate.render(),
     });
   }
 
   static Top10Button() {
-    return HtmlNode.render("button", ["Top 10"], {
+    return HtmlNode.render("button", ["Таблица лидеров"], {
+      className: "btn btn-info",
       onclick: () => TopModal.openModal(),
     });
   }

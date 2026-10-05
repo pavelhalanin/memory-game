@@ -8,7 +8,23 @@ export class TopModal extends Modal {
   static ModalBodyComponent() {
     return HtmlNode.render(
       "div",
-      ["TOP 10", this.getContent(), this.ModalButtonComponent()],
+      [
+        "TOP 10",
+        this.getContent(),
+        this.ModalButtonComponent(),
+        HtmlNode.render(
+          "div",
+          [
+            HtmlNode.render("button", ["Закрыть"], {
+              className: "btn btn-danger",
+              onclick: () => this.closeModal(),
+            }),
+          ],
+          {
+            className: "modal__footer_top10",
+          },
+        ),
+      ],
       {
         className: "modal__body",
       },

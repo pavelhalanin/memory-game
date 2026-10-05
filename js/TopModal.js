@@ -9,7 +9,7 @@ export class TopModal extends Modal {
     return HtmlNode.render(
       "div",
       [
-        "TOP 10",
+        "ТОП 10 лидеров",
         this.getContent(),
         this.ModalButtonComponent(),
         HtmlNode.render(
@@ -63,11 +63,7 @@ export class TopModal extends Modal {
       const ARRAY = this.getTop10();
 
       if (ARRAY.length == 0) {
-        return HtmlNode.render(
-          "div",
-          ["The game has never been played. The top 10 list is empty."],
-          {},
-        );
+        return HtmlNode.render("div", ["Список лидеров пуст"], {});
       }
 
       const SET_SCORE = new Set();
@@ -86,9 +82,9 @@ export class TopModal extends Modal {
           HtmlNode.render(
             "tr",
             [
-              HtmlNode.render("td", ["#"], {}),
-              HtmlNode.render("td", ["Score"], {}),
-              HtmlNode.render("td", ["Date"], {}),
+              HtmlNode.render("td", ["№ п/п"], {}),
+              HtmlNode.render("td", ["Количество ходов"], {}),
+              HtmlNode.render("td", ["Дата"], {}),
             ],
             {},
           ),

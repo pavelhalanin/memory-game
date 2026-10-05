@@ -207,8 +207,22 @@ body[data-no-scroll-on-open-modal="true"] {
 
 /* end modal */
 
-.top10__wrapper table tr td {
-  border: 1px solid black;
+.top10__wrapper table {
+  border-collapse: collapse;
+}
+
+.top10__wrapper table tr>td {
+  border: 1px solid #dee2e6;
+  padding: 4px;
+}
+
+.top10__wrapper table tr>td:nth-child(1),
+.top10__wrapper table tr>td:nth-child(2) {
+  text-align: right;
+}
+
+.top10__wrapper table tr>td:nth-child(3) {
+  text-align: center;
 }
 
 .modal__footer_win {

@@ -1,3 +1,19 @@
+.game_status {
+    color: #055160;
+    background-color: #cff4fc;
+    border-color: #b6effb;
+
+    max-width: calc(120px * 4 - 16px * 2 - 1px * 2);
+    margin: 8px auto;
+    padding: 16px;
+    border-radius: 0.25rem;
+    border-width: 1px;
+    border-style: solid;
+
+    display: flex;
+    justify-content: space-between;
+}
+
 .cards {
     width: calc(120px * 4);
     display: flex;

@@ -1,4 +1,5 @@
 import { GameLogic } from "./GameLogic.js";
+import { HtmlNode } from "./HtmlNode.js";
 
 export class CounterHelper {
   static id_game_counter = "game_counter";
@@ -18,18 +19,28 @@ export class CounterHelper {
       return;
     }
 
-    DIV.textContent = this.getText(pairs, score);
+    DIV.replaceChildren();
+    DIV.append(this.getText(pairs, score));
   }
 
   static GetGameCountComponent() {
-    const DIV = document.createElement("div");
-    DIV.setAttribute("id", this.id_game_counter);
-    DIV.textContent = this.getText(0, 0);
-    DIV.style.textAlign = "center";
-    return DIV;
+    return HtmlNode.render("div", [this.getText(0, 0)], {
+      attrs: {
+        id: this.id_game_counter,
+      },
+    });
   }
 
   static getText(pairs, score) {
-    return `Pairs guessed: ${pairs} / Score ${score}`;
+    return HtmlNode.render(
+      "div",
+      [
+        HtmlNode.render("div", [`Счётчик ходов: ${score}`], {}),
+        HtmlNode.render("div", [`Найдено пар: ${pairs}/8`], {}),
+      ],
+      {
+        className: "game_status",
+      },
+    );
   }
 }

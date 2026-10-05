@@ -5,38 +5,14 @@ import { TopModal } from "./TopModal.js";
 export class GameLogic {
   static localStorageKey = "game_logic";
   static cards = [
-    {
-      id: 1,
-      imageSrc: "./assets/pokemon/1.png",
-    },
-    {
-      id: 2,
-      imageSrc: "./assets/pokemon/4.png",
-    },
-    {
-      id: 3,
-      imageSrc: "./assets/pokemon/7.png",
-    },
-    {
-      id: 4,
-      imageSrc: "./assets/pokemon/16.png",
-    },
-    {
-      id: 5,
-      imageSrc: "./assets/pokemon/25.png",
-    },
-    {
-      id: 6,
-      imageSrc: "./assets/pokemon/40.png",
-    },
-    {
-      id: 7,
-      imageSrc: "./assets/pokemon/41.png",
-    },
-    {
-      id: 8,
-      imageSrc: "./assets/pokemon/271.png",
-    },
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+    { id: 4 },
+    { id: 5 },
+    { id: 6 },
+    { id: 7 },
+    { id: 8 },
   ];
 
   static startGame() {

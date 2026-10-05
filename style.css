@@ -182,10 +182,13 @@ body[data-no-scroll-on-open-modal="true"] {
 
 .modal__body {
   overflow-y: auto;
-  padding: 16px;
+  padding: 24px 16px 16px 16px;
   background-color: white;
 
   position: relative;
+
+  border-radius: 4px;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 }
 
 .modal__close_button {
@@ -193,15 +196,15 @@ body[data-no-scroll-on-open-modal="true"] {
   top: 0;
   right: 0;
 
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 8px;
+  font-size: 12px;
 
-  background-color: red;
-  color: white;
+  background-color: #dc3545;
+  color: #fff;
   border: none;
 }
 
@@ -226,11 +229,13 @@ body[data-no-scroll-on-open-modal="true"] {
 }
 
 .modal__footer_win {
+  padding-top: 8px;
   display: flex;
   justify-content: space-between;
 }
 
 .modal__footer_top10 {
+  padding-top: 8px;
   display: flex;
   justify-content: end;
 }

@@ -1,4 +1,6 @@
-class TopModal {
+import { Generate } from "./Generate.js";
+
+export class TopModal {
   static localStorageKey = "_gameTop";
 
   static getIdModal() {
@@ -48,7 +50,7 @@ class TopModal {
   static ModalOverlayComponent() {
     const OVERLAY = document.createElement("div");
     OVERLAY.classList.add("modal__overlay");
-    OVERLAY.setAttribute("onclick", `${this.name}.closeModal()`);
+    OVERLAY.addEventListener("click", () => this.closeModal());
     return OVERLAY;
   }
 
@@ -71,7 +73,7 @@ class TopModal {
   static ModalButtonComponent() {
     const BUTTON = document.createElement("button");
     BUTTON.classList.add("modal__close_button");
-    BUTTON.setAttribute("onclick", `${this.name}.closeModal()`);
+    BUTTON.addEventListener("click", () => this.closeModal());
     BUTTON.textContent = "X";
     return BUTTON;
   }

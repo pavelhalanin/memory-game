@@ -1,4 +1,6 @@
-class CounterHelper {
+import { GameLogic } from "./GameLogic.js";
+
+export class CounterHelper {
   static id_game_counter = "game_counter";
 
   static render() {

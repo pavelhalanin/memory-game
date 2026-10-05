@@ -1,4 +1,8 @@
-class Generate {
+import { GameLogic } from "./GameLogic.js";
+import { Header } from "./Header.js";
+import { CounterHelper } from "./CounterHelper.js";
+
+export class Generate {
   static render() {
     document.body.querySelectorAll("#root").forEach((e) => e.remove());
 
@@ -28,7 +32,7 @@ class Generate {
   static createCard(data) {
     const CARD = document.createElement("button");
     CARD.classList.add("card");
-    CARD.setAttribute("onclick", `GameLogic.setOpen('${data.id}')`);
+    CARD.addEventListener("click", () => GameLogic.setOpen(`${data.id}`));
     CARD.setAttribute("data-id", `${data.id}`);
     CARD.setAttribute("data-card-id", `${data.cardId}`);
     CARD.setAttribute("data-is-rotate", "false");

@@ -1,4 +1,8 @@
-class GameLogic {
+import { CounterHelper } from "./CounterHelper.js";
+import { WinModal } from "./WinModal.js";
+import { TopModal } from "./TopModal.js";
+
+export class GameLogic {
   static localStorageKey = "game_logic";
   static cards = [
     {

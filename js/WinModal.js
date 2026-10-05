@@ -1,4 +1,7 @@
-class WinModal {
+import { GameLogic } from "./GameLogic.js";
+import { Generate } from "./Generate.js";
+
+export class WinModal {
   static getIdModal() {
     return `${this.name}__modal`;
   }
@@ -46,7 +49,7 @@ class WinModal {
   static ModalOverlayComponent() {
     const OVERLAY = document.createElement("div");
     OVERLAY.classList.add("modal__overlay");
-    OVERLAY.setAttribute("onclick", `${this.name}.closeModal()`);
+    OVERLAY.addEventListener("click", () => this.closeModal());
     return OVERLAY;
   }
 
@@ -72,7 +75,7 @@ class WinModal {
   static ModalButtonComponent() {
     const BUTTON = document.createElement("button");
     BUTTON.classList.add("modal__close_button");
-    BUTTON.setAttribute("onclick", `${this.name}.closeModal()`);
+    BUTTON.addEventListener("click", () => this.closeModal());
     BUTTON.textContent = "X";
     return BUTTON;
   }
@@ -86,7 +89,7 @@ class WinModal {
     const DIV = document.createElement("div");
 
     const BUTTON = document.createElement("button");
-    BUTTON.setAttribute("onclick", `${this.name}.closeModalAndStartGame()`);
+    BUTTON.addEventListener("click", () => this.closeModalAndStartGame());
     BUTTON.textContent = "New game";
 
     DIV.appendChild(BUTTON);

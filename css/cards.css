@@ -1,9 +1,17 @@
+.header {
+    max-width: calc(100px * 4 + 24px * 3);
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: space-between;
+}
+
 .game_status {
     color: #055160;
     background-color: #cff4fc;
     border-color: #b6effb;
 
-    max-width: calc(120px * 4 - 16px * 2 - 1px * 2);
+    max-width: calc(100px * 4 + 24px * 3 - 16px * 2 - 1px * 2);
     margin: 8px auto;
     padding: 16px;
     border-radius: 0.25rem;
@@ -15,8 +23,10 @@
 }
 
 .cards {
-    width: calc(120px * 4);
+    width: calc(100px * 4 + 24px * 3);
+    margin: 0 auto;
+
     display: flex;
     flex-wrap: wrap;
-    margin: 0 auto;
+    gap: 24px;
 }

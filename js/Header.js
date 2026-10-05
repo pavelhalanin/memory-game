@@ -4,10 +4,13 @@ import { HtmlNode } from "./HtmlNode.js";
 
 export class Header {
   static HeaderComponent() {
-    return HtmlNode.render("div", [
-      this.NewGameButtonComponent(),
-      this.Top10Button(),
-    ]);
+    return HtmlNode.render(
+      "header",
+      [this.NewGameButtonComponent(), this.Top10Button()],
+      {
+        className: "header",
+      },
+    );
   }
 
   static NewGameButtonComponent() {

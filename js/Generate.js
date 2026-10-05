@@ -39,10 +39,10 @@ export class Generate {
     return HtmlNode.render(
       "button",
       [
-        HtmlNode.render("div", [`FRONT ${data.id}-${data.cardId}`], {
+        HtmlNode.render("div", [], {
           className: "card__front",
         }),
-        HtmlNode.render("div", [`BACK`], {
+        HtmlNode.render("div", [], {
           className: "card__back",
         }),
       ],

@@ -1,5 +1,6 @@
 import { GameLogic } from "./GameLogic.js";
 import { Generate } from "./Generate.js";
+import { HtmlNode } from "./HtmlNode.js";
 
 export class WinModal {
   static getIdModal() {
@@ -36,48 +37,53 @@ export class WinModal {
   }
 
   static ModalDialogComponent() {
-    const ID_MODAL = this.getIdModal();
-    const SELECTOR = `#${ID_MODAL}`;
-    const DIALOG = document.createElement("dialog");
-    DIALOG.setAttribute("id", ID_MODAL);
-    DIALOG.classList.add("modal");
-    DIALOG.appendChild(this.ModalOverlayComponent());
-    DIALOG.appendChild(this.ModalWrapperComponent());
-    return DIALOG;
+    return HtmlNode.render(
+      "dialog",
+      [this.ModalOverlayComponent(), this.ModalWrapperComponent()],
+      {
+        className: "modal",
+        attrs: {
+          id: this.getIdModal(),
+        },
+      },
+    );
   }
 
   static ModalOverlayComponent() {
-    const OVERLAY = document.createElement("div");
-    OVERLAY.classList.add("modal__overlay");
-    OVERLAY.addEventListener("click", () => this.closeModal());
-    return OVERLAY;
+    return HtmlNode.render("div", [], {
+      className: "modal__overlay",
+      onclick: () => this.closeModal(),
+    });
   }
 
   static ModalWrapperComponent() {
-    const WRAPPER = document.createElement("div");
-    WRAPPER.classList.add("modal__wrapper");
-    WRAPPER.appendChild(this.ModalBodyComponent());
-    return WRAPPER;
+    return HtmlNode.render("div", [this.ModalBodyComponent()], {
+      className: "modal__wrapper",
+    });
   }
 
   static ModalBodyComponent() {
     const GAME_LOGIC = GameLogic.getGame();
     const SCORE = GAME_LOGIC.score;
 
-    const BODY = document.createElement("div");
-    BODY.classList.add("modal__body");
-    BODY.textContent = `You are win with score ${SCORE}`;
-    BODY.appendChild(this.ModalButtonComponent());
-    BODY.appendChild(this.ModalButtonStartBattleComponent());
-    return BODY;
+    return HtmlNode.render(
+      "div",
+      [
+        `You are win with score ${SCORE}`,
+        this.ModalButtonComponent(),
+        this.ModalButtonStartBattleComponent(),
+      ],
+      {
+        className: "modal__body",
+      },
+    );
   }
 
   static ModalButtonComponent() {
-    const BUTTON = document.createElement("button");
-    BUTTON.classList.add("modal__close_button");
-    BUTTON.addEventListener("click", () => this.closeModal());
-    BUTTON.textContent = "X";
-    return BUTTON;
+    return HtmlNode.render("button", ["x"], {
+      className: "modal__close_button",
+      onclick: () => this.closeModal(),
+    });
   }
 
   static closeModalAndStartGame() {
@@ -86,14 +92,14 @@ export class WinModal {
   }
 
   static ModalButtonStartBattleComponent() {
-    const DIV = document.createElement("div");
-
-    const BUTTON = document.createElement("button");
-    BUTTON.addEventListener("click", () => this.closeModalAndStartGame());
-    BUTTON.textContent = "New game";
-
-    DIV.appendChild(BUTTON);
-
-    return DIV;
+    return HtmlNode.render(
+      "div",
+      [
+        HtmlNode.render("button", ["New game"], {
+          onclick: () => this.closeModalAndStartGame(),
+        }),
+      ],
+      {},
+    );
   }
 }

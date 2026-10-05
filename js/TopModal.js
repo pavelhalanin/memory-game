@@ -1,4 +1,5 @@
 import { Generate } from "./Generate.js";
+import { HtmlNode } from "./HtmlNode.js";
 
 export class TopModal {
   static localStorageKey = "_gameTop";
@@ -37,45 +38,46 @@ export class TopModal {
   }
 
   static ModalDialogComponent() {
-    const ID_MODAL = this.getIdModal();
-    const SELECTOR = `#${ID_MODAL}`;
-    const DIALOG = document.createElement("dialog");
-    DIALOG.setAttribute("id", ID_MODAL);
-    DIALOG.classList.add("modal");
-    DIALOG.appendChild(this.ModalOverlayComponent());
-    DIALOG.appendChild(this.ModalWrapperComponent());
-    return DIALOG;
+    return HtmlNode.render(
+      "dialog",
+      [this.ModalOverlayComponent(), this.ModalWrapperComponent()],
+      {
+        className: "modal",
+        attrs: {
+          id: this.getIdModal(),
+        },
+      },
+    );
   }
 
   static ModalOverlayComponent() {
-    const OVERLAY = document.createElement("div");
-    OVERLAY.classList.add("modal__overlay");
-    OVERLAY.addEventListener("click", () => this.closeModal());
-    return OVERLAY;
+    return HtmlNode.render("div", [], {
+      className: "modal__overlay",
+      onclick: () => this.closeModal(),
+    });
   }
 
   static ModalWrapperComponent() {
-    const WRAPPER = document.createElement("div");
-    WRAPPER.classList.add("modal__wrapper");
-    WRAPPER.appendChild(this.ModalBodyComponent());
-    return WRAPPER;
+    return HtmlNode.render("div", [this.ModalBodyComponent()], {
+      className: "modal__wrapper",
+    });
   }
 
   static ModalBodyComponent() {
-    const BODY = document.createElement("div");
-    BODY.classList.add("modal__body");
-    BODY.textContent = "TOP 10";
-    BODY.appendChild(this.getContent());
-    BODY.appendChild(this.ModalButtonComponent());
-    return BODY;
+    return HtmlNode.render(
+      "div",
+      ["TOP 10", this.getContent(), this.ModalButtonComponent()],
+      {
+        className: "modal__body",
+      },
+    );
   }
 
   static ModalButtonComponent() {
-    const BUTTON = document.createElement("button");
-    BUTTON.classList.add("modal__close_button");
-    BUTTON.addEventListener("click", () => this.closeModal());
-    BUTTON.textContent = "X";
-    return BUTTON;
+    return HtmlNode.render("button", ["x"], {
+      className: "modal__close_button",
+      onclick: () => this.closeModal(),
+    });
   }
 
   static closeModalAndStartBattle() {
@@ -115,9 +117,11 @@ export class TopModal {
       const ARRAY = this.getTop10();
 
       if (ARRAY.length == 0) {
-        DIV.textContent =
-          "The game has never been played. The top 10 list is empty.";
-        return DIV;
+        return HtmlNode.render(
+          "div",
+          ["The game has never been played. The top 10 list is empty."],
+          {},
+        );
       }
 
       const SET_SCORE = new Set();
@@ -130,46 +134,40 @@ export class TopModal {
         .sort((a, b) => a - b)
         .slice(0, 10);
 
-      const TABLE = document.createElement("table");
+      const TABLE = HtmlNode.render(
+        "table",
+        [
+          HtmlNode.render(
+            "tr",
+            [
+              HtmlNode.render("td", ["#"], {}),
+              HtmlNode.render("td", ["Score"], {}),
+              HtmlNode.render("td", ["Date"], {}),
+            ],
+            {},
+          ),
+          ...SCORE_ARRAY.map((score, index) => {
+            const NUMBER = index + 1;
+            const SCORE = score;
+            const DATE = this.getDate(
+              ARRAY.filter((e) => e.score === SCORE).sort(
+                (a, b) => a.createAt - b.createAt,
+              )[0].createdAt,
+            );
+            return HtmlNode.render(
+              "tr",
+              [
+                HtmlNode.render("td", [NUMBER], {}),
+                HtmlNode.render("td", [SCORE], {}),
+                HtmlNode.render("td", [DATE], {}),
+              ],
+              {},
+            );
+          }),
+        ],
+        {},
+      );
 
-      const TR = document.createElement("tr");
-
-      const TD1 = document.createElement("td");
-      TD1.textContent = "#";
-
-      const TD2 = document.createElement("td");
-      TD2.textContent = "Score";
-
-      const TD3 = document.createElement("td");
-      TD3.textContent = "Date";
-
-      TR.appendChild(TD1);
-      TR.appendChild(TD2);
-      TR.appendChild(TD3);
-      TABLE.appendChild(TR);
-
-      for (let i = 0; i < SCORE_ARRAY.length; i++) {
-        const SCORE = SCORE_ARRAY[i];
-
-        const TR_I = document.createElement("tr");
-
-        const TD_I1 = document.createElement("td");
-        TD_I1.textContent = i + 1;
-
-        const TD_I2 = document.createElement("td");
-        TD_I2.textContent = SCORE;
-
-        const DATETIME = ARRAY.filter((e) => e.score === SCORE).sort(
-          (a, b) => a.createAt - b.createAt,
-        )[0].createdAt;
-        const TD_I3 = document.createElement("td");
-        TD_I3.textContent = this.getDate(DATETIME);
-
-        TR_I.append(TD_I1);
-        TR_I.append(TD_I2);
-        TR_I.append(TD_I3);
-        TABLE.append(TR_I);
-      }
       DIV.append(TABLE);
     } catch (exception) {
       console.info(exception);
